@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Data Scientist Quiz</title>
+  <style>
+    /* same styles as you shared - kept unchanged for consistency */
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>📊 Data Scientist Quiz</h1>
+    
+    <div class="name-input">
+      <input type="text" id="username" placeholder="Enter your name for the certificate" />
+    </div>
+
+    <form id="quiz-form"></form>
+    
+    <button id="submit-btn">Submit Answers</button>
+    
+    <div id="result" class="hidden"></div>
+
+    <div id="certificate">
+      <h2>🎓 Certificate of Achievement</h2>
+      <p>This is proudly presented to</p>
+      <div id="user-name-display">[User Name]</div>
+      <p>For successfully passing the Data Scientist Quiz</p>
+      <button id="download-btn">Download Certificate</button>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "1. Which language is most commonly used in data science?",
+        options: ["Java", "C++", "Python", "Ruby"],
+        correct: 2
+      },
+      {
+        question: "2. What does 'Pandas' in Python help with?",
+        options: ["Image editing", "Data manipulation", "Web development", "Machine vision"],
+        correct: 1
+      },
+      {
+        question: "3. What is the purpose of Matplotlib?",
+        options: ["Machine learning", "Database queries", "Data visualization", "Web scraping"],
+        correct: 2
+      },
+      {
+        question: "4. Which of the following is a supervised learning algorithm?",
+        options: ["K-means", "Linear Regression", "PCA", "DBSCAN"],
+        correct: 1
+      },
+      {
+        question: "5. What is the function of SQL in data science?",
+        options: ["Build models", "Visualize data", "Query databases", "Scrape websites"],
+        correct: 2
+      },
+      {
+        question: "6. What is overfitting in machine learning?",
+        options: ["High training error", "Poor learning rate", "Model fits noise", "Incorrect labels"],
+        correct: 2
+      },
+      {
+        question: "7. Which platform is popular for data science competitions?",
+        options: ["GitHub", "Reddit", "Kaggle", "StackOverflow"],
+        correct: 2
+      },
+      {
+        question: "8. What does a confusion matrix evaluate?",
+        options: ["Data types", "Training time", "Model accuracy", "Classification performance"],
+        correct: 3
+      },
+      {
+        question: "9. What is TensorFlow primarily used for?",
+        options: ["Web apps", "Deep learning", "Statistics", "APIs"],
+        correct: 1
+      },
+      {
+        question: "10. What is the purpose of Jupyter Notebooks?",
+        options: ["Version control", "Coding and visualizing interactively", "Running servers", "Managing cloud storage"],
+        correct: 1
+      },
+    ];
+
+    const quizForm = document.getElementById("quiz-form");
+    const resultBox = document.getElementById("result");
+    const certificate = document.getElementById("certificate");
+    const downloadBtn = document.getElementById("download-btn");
+    const userNameInput = document.getElementById("username");
+    const userNameDisplay = document.getElementById("user-name-display");
+
+    quizData.forEach((q, index) => {
+      const block = document.createElement("div");
+      block.classList.add("question-block");
+      block.style.animationDelay = `${index * 0.1}s`;
+
+      const questionTitle = document.createElement("h3");
+      questionTitle.innerText = q.question;
+      block.appendChild(questionTitle);
+
+      q.options.forEach((option, optIndex) => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+
+        input.type = "radio";
+        input.name = `question-${index}`;
+        input.value = optIndex;
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(option));
+        block.appendChild(label);
+      });
+
+      quizForm.appendChild(block);
+    });
+
+    document.getElementById("submit-btn").addEventListener("click", () => {
+      const userName = userNameInput.value.trim();
+
+      if (!userName) {
+        alert("Please enter your name to generate the certificate.");
+        return;
+      }
+
+      let score = 0;
+
+      quizData.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="question-${i}"]:checked`);
+        if (selected && parseInt(selected.value) === q.correct) {
+          score++;
+        }
+      });
+
+      resultBox.classList.remove("hidden");
+      resultBox.innerText = `🎉 You got ${score} out of ${quizData.length} correct!`;
+
+      if (score >= 5) {
+        userNameDisplay.textContent = userName;
+        certificate.style.display = "block";
+      }
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      html2canvas(document.getElementById("certificate")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "datascientist-certificate.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
+  </script>
+
+  <!-- html2canvas library -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</body>
+</html>

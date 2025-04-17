@@ -1,0 +1,181 @@
+/* Base Reset and Font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Body Layout */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c');
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+/* Top Navigation Bar */
+.topbar {
+  width: 100%;
+  background-color: #1e293b;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topbar button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.topbar button a {
+  color: white;
+  text-decoration: none;
+}
+
+.topbar button:hover {
+  background-color: #2563eb;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+.main-content button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.main-content button a {
+  color: white;
+  text-decoration: none;
+}
+
+.main-content button:hover {
+  background-color: #2563eb;
+}
+
+/* Button Wrapper on Index Page */
+.button-wrapper {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.button-wrapper button {
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #1e293b;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+}
+
+.button-wrapper button:hover {
+  transform: scale(1.05);
+  background-color: #facc15;
+}
+
+/* Cards for Technical / Non-Technical Pages */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  width: 300px;
+  color: #1e293b;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Contact Form */
+.contact-container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.contact-container h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.contact-container input,
+.contact-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+.contact-container button {
+  padding: 12px 24px;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.contact-container button:hover {
+  background-color: #2563eb;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .topbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}

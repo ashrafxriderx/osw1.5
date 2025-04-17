@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Full Stack Developer Quiz</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --accent: #06b6d4;
+      --bg: #f0f4f8;
+      --white: #ffffff;
+      --text: #1f2937;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, var(--primary), var(--accent));
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+    }
+
+    .quiz-container {
+      background: var(--white);
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--primary);
+      font-size: 2rem;
+    }
+
+    .name-input {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .name-input input {
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      width: 60%;
+      transition: border-color 0.3s ease;
+    }
+
+    .name-input input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .question-block {
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 12px;
+      background-color: #f9fafb;
+      border-left: 6px solid var(--primary);
+      animation: slideIn 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .question-block h3 {
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #e5e7eb;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s;
+    }
+
+    label:hover {
+      background: #d1d5db;
+      transform: translateX(4px);
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    #submit-btn {
+      background: var(--primary);
+      color: white;
+      padding: 14px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s;
+      display: block;
+      margin: 40px auto 0 auto;
+    }
+
+    #submit-btn:hover {
+      background: #4338ca;
+      transform: scale(1.05);
+    }
+
+    #result {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #10b981;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #certificate {
+      display: none;
+      margin-top: 40px;
+      padding: 30px;
+      background: #fff;
+      border: 5px double var(--accent);
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    #certificate h2 {
+      color: var(--primary);
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    #certificate p {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    #user-name-display {
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+      margin: 10px 0;
+    }
+
+    #download-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #download-btn:hover {
+      background-color: #0891b2;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      0% { opacity: 0; transform: translateX(-50px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>🚀 Full Stack Developer Quiz</h1>
+    
+    <div class="name-input">
+      <input type="text" id="username" placeholder="Enter your name for the certificate" />
+    </div>
+
+    <form id="quiz-form"></form>
+    
+    <button id="submit-btn">Submit Answers</button>
+    
+    <div id="result" class="hidden"></div>
+
+    <div id="certificate">
+      <h2>🎓 Certificate of Achievement</h2>
+      <p>This is proudly presented to</p>
+      <div id="user-name-display">[User Name]</div>
+      <p>For successfully passing the Full Stack Developer Quiz</p>
+      <button id="download-btn">Download Certificate</button>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "1. What does HTML stand for?",
+        options: ["Hyper Text Markup Language", "Hot Mail", "How To Make Links", "Hyperloop Text Machine Language"],
+        correct: 0
+      },
+      {
+        question: "2. Which language is used for styling web pages?",
+        options: ["HTML", "JQuery", "CSS", "Java"],
+        correct: 2
+      },
+      {
+        question: "3. What is React primarily used for?",
+        options: ["Database Management", "Server-side logic", "Building UIs", "Image Processing"],
+        correct: 2
+      },
+      {
+        question: "4. Which one is a NoSQL database?",
+        options: ["MySQL", "MongoDB", "PostgreSQL", "Oracle"],
+        correct: 1
+      },
+      {
+        question: "5. What is Node.js?",
+        options: ["A front-end framework", "A JavaScript runtime", "A database", "An operating system"],
+        correct: 1
+      },
+      {
+        question: "6. Git is used for?",
+        options: ["Image editing", "Version control", "Server hosting", "Testing"],
+        correct: 1
+      },
+      {
+        question: "7. Express.js is a framework for?",
+        options: ["Python", "Node.js", "Ruby", "React"],
+        correct: 1
+      },
+      {
+        question: "8. What is Docker used for?",
+        options: ["Text editing", "Containerization", "Framework building", "Monitoring"],
+        correct: 1
+      },
+      {
+        question: "9. Which of these is a front-end framework?",
+        options: ["Django", "Angular", "Flask", "Laravel"],
+        correct: 1
+      },
+      {
+        question: "10. Which cloud platform is by Amazon?",
+        options: ["Azure", "GCP", "AWS", "Firebase"],
+        correct: 2
+      },
+    ];
+
+    const quizForm = document.getElementById("quiz-form");
+    const resultBox = document.getElementById("result");
+    const certificate = document.getElementById("certificate");
+    const downloadBtn = document.getElementById("download-btn");
+    const userNameInput = document.getElementById("username");
+    const userNameDisplay = document.getElementById("user-name-display");
+
+    quizData.forEach((q, index) => {
+      const block = document.createElement("div");
+      block.classList.add("question-block");
+      block.style.animationDelay = `${index * 0.1}s`;
+
+      const questionTitle = document.createElement("h3");
+      questionTitle.innerText = q.question;
+      block.appendChild(questionTitle);
+
+      q.options.forEach((option, optIndex) => {
+        const label = document.createElement("label");
+        const input = document.createElement("input");
+
+        input.type = "radio";
+        input.name = `question-${index}`;
+        input.value = optIndex;
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(option));
+        block.appendChild(label);
+      });
+
+      quizForm.appendChild(block);
+    });
+
+    document.getElementById("submit-btn").addEventListener("click", () => {
+      const userName = userNameInput.value.trim();
+
+      if (!userName) {
+        alert("Please enter your name to generate the certificate.");
+        return;
+      }
+
+      let score = 0;
+
+      quizData.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="question-${i}"]:checked`);
+        if (selected && parseInt(selected.value) === q.correct) {
+          score++;
+        }
+      });
+
+      resultBox.classList.remove("hidden");
+      resultBox.innerText = `🎉 You got ${score} out of ${quizData.length} correct!`;
+
+      if (score >= 5) {
+        userNameDisplay.textContent = userName;
+        certificate.style.display = "block";
+      }
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      html2canvas(document.getElementById("certificate")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "certificate.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
+  </script>
+
+  <!-- html2canvas library -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</body>
+</html>
